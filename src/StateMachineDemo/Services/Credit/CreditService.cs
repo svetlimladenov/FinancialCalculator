@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using MassTransit;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,14 +8,21 @@ namespace Credit
 {
     public class CreditService : IHostedService
     {
-        public Task StartAsync(CancellationToken cancellationToken)
+        private readonly IBusControl busControl;
+
+        public CreditService(IBusControl busControl)
         {
-            throw new NotImplementedException();
+            this.busControl = busControl;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await busControl.StartAsync();
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            await busControl.StopAsync();
         }
     }
 }

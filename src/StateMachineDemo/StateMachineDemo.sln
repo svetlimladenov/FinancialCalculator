@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credit", "Services\Credit\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment", "Services\Payment\Payment.csproj", "{60219A86-5CE9-4FDF-8036-4A34B140219F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastucture", "Infrastucture\Infrastucture.csproj", "{BF414DC0-ABFE-4DA9-AF71-71AF5914C477}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{60219A86-5CE9-4FDF-8036-4A34B140219F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60219A86-5CE9-4FDF-8036-4A34B140219F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60219A86-5CE9-4FDF-8036-4A34B140219F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF414DC0-ABFE-4DA9-AF71-71AF5914C477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF414DC0-ABFE-4DA9-AF71-71AF5914C477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF414DC0-ABFE-4DA9-AF71-71AF5914C477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF414DC0-ABFE-4DA9-AF71-71AF5914C477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

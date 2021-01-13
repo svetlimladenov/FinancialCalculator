@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastucture;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,13 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOpenApiDocument();
+
+            services.AddMassTransit(cfg =>
+            {
+                cfg.UsingRabbitMq(MassTransitBusFactory.ConfigureBus);
+            });
+
+            services.AddMassTransitHostedService();
 
             services.AddControllers();
         }
