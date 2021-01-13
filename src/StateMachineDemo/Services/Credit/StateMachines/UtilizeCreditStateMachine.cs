@@ -37,6 +37,7 @@ namespace Credit.StateMachines
             Event(() => AddBonusPointsFaulted, x => x.CorrelateBy(i => i.CreditId, m => m.Message.CreditId));
             Event(() => RefinanceCreditCompleted, x => x.CorrelateBy(i => i.CreditId, m => m.Message.ParentCreditId));
             Event(() => RefinanceCreditFaulted, x => x.CorrelateBy(i => i.CreditId, m => m.Message.ParentCreditId));
+            Event(() => DeleteCreditCompleted, x => x.CorrelateBy(i => i.CreditId, m => m.Message.CreditId));
 
             Initially(
                When(UtilizeCreditRequested)
@@ -53,7 +54,8 @@ namespace Credit.StateMachines
                     .PublishAsync(ctx => ctx.Init<AddBonusPointsRequested>(new { ctx.Instance.Request.BonusPoints })),
                 When(CreateCreditFaulted)
                     .SendAsync(ctx => ctx.Instance.ResponseAddress, UtilizeCreditFaultedAsync, PopulateRequestId)
-                    .Finalize());
+                    .TransitionTo(DeletingCredit)
+                    .PublishAsync(ctx => ctx.Init<DeleteCreditRequested>(new { ctx.Instance.Request.CreateCredit.CreditId })));
 
             During(
                 AddingBonusPoints,
@@ -62,7 +64,8 @@ namespace Credit.StateMachines
                     .PublishAsync(ctx => ctx.Init<RefinanceCreditRequested>(new { ctx.Instance.Request.RefinanceCredit })),
                 When(AddBonusPointsFaulted)
                     .SendAsync(ctx => ctx.Instance.ResponseAddress, UtilizeCreditFaultedAsync, PopulateRequestId)
-                    .Finalize());
+                    .TransitionTo(DeletingCredit)
+                    .PublishAsync(ctx => ctx.Init<DeleteCreditRequested>(new { ctx.Instance.Request.CreateCredit.CreditId })));
 
             During(
                 RefinancingCredit,
@@ -71,7 +74,13 @@ namespace Credit.StateMachines
                      .Finalize(),
                 When(RefinanceCreditFaulted)
                     .SendAsync(ctx => ctx.Instance.ResponseAddress, UtilizeCreditFaultedAsync, PopulateRequestId)
-                    .Finalize());
+                    .TransitionTo(DeletingCredit)
+                    .PublishAsync(ctx => ctx.Init<DeleteCreditRequested>(new { ctx.Instance.Request.CreateCredit.CreditId })));
+
+            During(
+                DeletingCredit,
+                When(DeleteCreditCompleted)
+                .Finalize());
 
             SetCompletedWhenFinalized();
         }
@@ -82,7 +91,7 @@ namespace Credit.StateMachines
 
         public State RefinancingCredit { get; private set; }
 
-        public State ExternalSystemUtilizing { get; private set; }
+        public State DeletingCredit { get; private set; }
 
         public Event<UtilizeCreditRequested> UtilizeCreditRequested { get; private set; }
 
@@ -97,6 +106,8 @@ namespace Credit.StateMachines
         public Event<RefinanceCreditCompleted> RefinanceCreditCompleted { get; private set; }
 
         public Event<RefinanceCreditFaulted> RefinanceCreditFaulted { get; private set; }
+
+        public Event<DeleteCreditCompleted> DeleteCreditCompleted { get; private set; }
 
         private static void PopulateRequestId<TMessage>(SendContext<TMessage> contextCallback)
             where TMessage : class

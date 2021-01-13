@@ -24,9 +24,7 @@ namespace Credit.Consumers
             // the routing slip was already showed by Steliyan's Demo (ST6)
             // https://github.com/steliyan/Demo-MassTransit-ST6 
 
-
-            await Task.Delay(3000);
-
+            await Task.Delay(2000);
 
             if (createCredit.Period < 0)
             {
@@ -48,8 +46,6 @@ namespace Credit.Consumers
             // routing slip subscribers, which basicly wait for the Routing Slip to complete
             // and if it completed succesfully we specify what message to be send
             // and same when it faults
-
-            // Since 
         }
     }
 }
