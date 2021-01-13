@@ -1,12 +1,23 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading.Tasks;
 
 namespace Credit
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main()
         {
-            Console.WriteLine("Hello World!");
+            var hostBuilder = new HostBuilder();
+
+            hostBuilder
+                .ConfigureServices((hostBuilder, serviceCollection) =>
+                {
+                    serviceCollection.AddHostedService<CreditService>();
+                });
+
+            await hostBuilder.RunConsoleAsync();
         }
     }
 }
