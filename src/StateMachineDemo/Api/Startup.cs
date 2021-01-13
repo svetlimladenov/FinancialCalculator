@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
+using Api.Automapper;
 
 namespace Api
 {
@@ -29,6 +31,8 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOpenApiDocument(config => config.AllowReferencesWithProperties = true);
+
+            services.AddAutoMapper(typeof(MapperProfile));
 
             services.AddMassTransit(cfg =>
             {

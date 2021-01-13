@@ -1,4 +1,5 @@
-﻿using Infrastucture;
+﻿using Credit.StateMachines;
+using Infrastucture;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +21,11 @@ namespace Credit
                 {
                     serviceCollection.AddMassTransit(cfg =>
                     {
+                        var thisAssembly = typeof(CreditService).Assembly;
                         cfg.UsingRabbitMq(MassTransitBusFactory.ConfigureBus);
+
+                        cfg.AddConsumers(thisAssembly);
+                        cfg.AddSagaStateMachine<UtilizeCreditStateMachine, UtilizeCredit>().InMemoryRepository();
                     });
 
                     serviceCollection.AddHostedService<CreditService>();

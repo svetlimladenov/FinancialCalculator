@@ -20,7 +20,9 @@ namespace Payment
                 {
                     serviceCollection.AddMassTransit(cfg =>
                     {
+                        var thisAssembly = typeof(PaymentService).Assembly;
                         cfg.UsingRabbitMq(MassTransitBusFactory.ConfigureBus);
+                        cfg.AddConsumers(thisAssembly);
                     });
 
                     serviceCollection.AddHostedService<PaymentService>();
