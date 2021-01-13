@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts;
 using Infrastucture;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -27,11 +28,12 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOpenApiDocument();
+            services.AddOpenApiDocument(config => config.AllowReferencesWithProperties = true);
 
             services.AddMassTransit(cfg =>
             {
                 cfg.UsingRabbitMq(MassTransitBusFactory.ConfigureBus);
+                cfg.AddRequestClient<UtilizeCreditRequested>();
             });
 
             services.AddMassTransitHostedService();
@@ -46,8 +48,6 @@ namespace Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseOpenApi(); // serve OpenAPI/Swagger documents
             app.UseSwaggerUi3(); // serve Swagger UI
