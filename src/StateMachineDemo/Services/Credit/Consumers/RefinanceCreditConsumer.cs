@@ -36,8 +36,7 @@ namespace Credit.Consumers
             {
                 await context.RespondAsync<RefinanceCreditCompleted>(new
                 {
-                    refinanceCredit.ParentCreditId,
-                    ValidationErrors = new List<int>() { 1500 }
+                    refinanceCredit.ParentCreditId
                 });
             }
         }
