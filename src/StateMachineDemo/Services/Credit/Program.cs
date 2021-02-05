@@ -29,6 +29,7 @@ namespace Credit
                     });
 
                     serviceCollection.AddHostedService<CreditService>();
+                    serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
                 })
                 .ConfigureLogging((hostingContext, logging) => logging.AddSerilog(dispose: true));
 

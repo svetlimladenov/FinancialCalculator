@@ -61,6 +61,7 @@ namespace Credit.StateMachines
                 AddingBonusPoints,
                 When(AddBonusPointsCompleted)
                     .TransitionTo(RefinancingCredit)
+                    .Activity(x => x.OfType<PublishReversePaymentActivity>())
                     .PublishAsync(ctx => ctx.Init<RefinanceCreditRequested>(new { ctx.Instance.Request.RefinanceCredit })),
                 When(AddBonusPointsFaulted)
                     .SendAsync(ctx => ctx.Instance.ResponseAddress, UtilizeCreditFaultedAsync, PopulateRequestId)
