@@ -65,7 +65,7 @@ namespace Api.Controllers
         [HttpPost("CalculateCredit")]
         public async Task<IActionResult> CalculateCredit(CalculateCreditModel model)
         {
-            var request = clientFactory.CreateRequest<CalculateCreditRequested>(new { model.CreditSum, model.Interest, model.Months });
+            var request = clientFactory.CreateRequest<CalculateCreditRequested>(new { model.Amount, model.Interest, model.Period });
 
             var response = await request.GetResponse<CalculateCreditResponse>();
 
