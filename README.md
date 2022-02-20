@@ -7,7 +7,7 @@ The calculator consists of few small services
 
 - A User Interface build with Vue.js
 - API Gateway build with .NET 5
-- Few microservices communicating with RabbitMQ
+- Microservices communicating with RabbitMQ as a message broker
 
 ## Setup
 
@@ -16,4 +16,3 @@ For easier setup, we can run the RabbitMQ server in a docker container by execut
 ```bash
 docker-compose up
 ```
-
