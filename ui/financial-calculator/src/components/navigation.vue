@@ -14,13 +14,19 @@ export default {
             appTitle: "Calculator",
             menuItems: [
                 {
-                    title: "Home",
-                    path: "/"
+                    title: "Credit",
+                    name: "credit-view",
+                    path: "/credit"
                 },
                 {
-                    title: "Credits",
-                    name: "credits-view",
-                    path: "/credits"
+                    title: "Refinance",
+                    name: "refinance-view",
+                    path: "/refinance"
+                },
+                {
+                    title: "Lease",
+                    name: "lease-view",
+                    path: "/lease"
                 }
             ]
         }
