@@ -1,8 +1,19 @@
-# MassTransit state machine demo
+# Financial Calculator
 
-Basic sample, showing how to implement basic state machine, using **MassTransit**
+## About the project
 
-### RabbitMQ
+The financial calculator embraces the moder microservice architecture approach.
+The calculator consists of few small services
+
+- A User Interface build with Vue.js
+- API Gateway build with .NET 5
+- Few microservices communicating with RabbitMQ
+
+## Setup
+
+For easier setup, we can run the RabbitMQ server in a docker container by executing
+
 ```bash
 docker-compose up
 ```
+
