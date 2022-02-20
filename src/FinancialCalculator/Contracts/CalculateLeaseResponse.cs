@@ -4,6 +4,8 @@ namespace Contracts
 {
     public class CalculateLeaseResponse
     {
+        public decimal LeaseAmount { get; set; }
+
         public decimal InitialPayment { get; set; }
 
         public int Period { get; set; }

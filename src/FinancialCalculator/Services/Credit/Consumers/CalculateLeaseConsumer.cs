@@ -34,6 +34,7 @@ namespace Credit.Consumers
 
             await context.RespondAsync<CalculateLeaseResponse>(new
             {
+                LeaseAmount = context.Message.Amount,
                 Period = context.Message.Period,
                 MonthlyInstalment = monthlyInstalment,
                 RemainingAmount = remainingAmount,
