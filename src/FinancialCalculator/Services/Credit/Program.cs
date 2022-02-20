@@ -1,4 +1,5 @@
 ﻿using Credit.StateMachines;
+using Credit.Utils;
 using Infrastucture;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,7 @@ namespace Credit
 
                     serviceCollection.AddHostedService<CreditService>();
                     serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
+                    serviceCollection.AddScoped<ICalculator, Calculator>();
                 })
                 .ConfigureLogging((hostingContext, logging) => logging.AddSerilog(dispose: true));
 
