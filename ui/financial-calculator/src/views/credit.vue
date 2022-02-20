@@ -70,7 +70,7 @@
             v-for="(item, index) in payments"
             :key="index"
           >
-            <td>{{ index }}</td>
+            <td>{{ index + 1 }}</td>
             <td>{{ item.date }}</td>
             <td>{{ item.monthlyPayment }}</td>
             <td>{{ item.monthlyPrincipal }}</td>
