@@ -8,7 +8,7 @@ namespace Api.Automapper
     {
         public MapperProfile()
         {
-            CreateMap<CreateCreditModel,CreateCreditDTO>();
+            CreateMap<CreateCreditModel, CreateCreditDTO>();
 
             CreateMap<BonusPointsModel, BonusPointsDTO>();
 
