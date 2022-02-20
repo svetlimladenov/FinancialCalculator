@@ -24,7 +24,11 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOpenApiDocument(config => config.AllowReferencesWithProperties = true);
+            services.AddOpenApiDocument(config =>
+            {
+                config.AllowReferencesWithProperties = true;
+                config.Title = "Credit Calculator Documentation";
+            });
 
             services.AddAutoMapper(typeof(MapperProfile));
 
@@ -48,8 +52,11 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOpenApi(); // serve OpenAPI/Swagger documents
-            app.UseSwaggerUi3(); // serve Swagger UI
+            app.UseOpenApi();
+            app.UseSwaggerUi3(x =>
+            {
+                x.DocumentTitle = "Credit Calculator";
+            });
 
             app.UseRouting();
 

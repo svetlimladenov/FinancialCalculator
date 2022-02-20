@@ -62,6 +62,11 @@ namespace Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Calculates and gives a repayment plan, besed on your input
+        /// </summary>
+        /// <param name="model">Data for a credit calculation</param>
+        /// <returns>Returns a full repayment plan for your credit</returns>
         [HttpPost("CalculateCredit")]
         public async Task<IActionResult> CalculateCredit(CalculateCreditModel model)
         {
@@ -71,6 +76,7 @@ namespace Api.Controllers
 
             return Ok(response);
         }
+
 
         [HttpPost("CalculateRefinanceCredit")]
         public async Task<IActionResult> CalculateRefinanceCredit(CalculateRefinanceModel model)
@@ -82,6 +88,11 @@ namespace Api.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Calculates a leasing
+        /// </summary>
+        /// <param name="model">Input model</param>
+        /// <returns>Data for leasing calculation</returns>
         [HttpPost("CalculateLease")]
         public async Task<IActionResult> CalculateLease(CalculateLeaseModel model)
         {

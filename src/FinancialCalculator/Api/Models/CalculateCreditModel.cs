@@ -7,5 +7,7 @@ namespace Api.Models
         public int Period { get; set; }
 
         public decimal Interest { get; set; }
+
+
     }
 }
