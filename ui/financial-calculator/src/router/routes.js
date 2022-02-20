@@ -1,17 +1,23 @@
-import Home from "../views/home";
-import Credits from "../views/credits"
+import Credit from "../views/credit"
+import Refinance from "../views/refinance"
+import Lease from "../views/lease"
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
     {
-        path: "/",
-        name: "home-view",
-        component: Home
+        path: "/credit",
+        name: "credit-view",
+        component: Credit
     },
     {
-        path: "/credits",
-        name: "credits-view",
-        component: Credits
+        path: "/refinance",
+        name: "refinance-view",
+        component: Refinance
+    },
+    {
+        path: "/lease",
+        name: "lease-view",
+        component: Lease
     }
 ]
 

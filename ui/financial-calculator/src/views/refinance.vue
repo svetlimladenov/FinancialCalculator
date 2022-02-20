@@ -46,6 +46,9 @@
         <thead>
           <tr>
             <th class="text-left">
+              №
+            </th>
+            <th class="text-left">
               Дата
             </th>
             <th class="text-left">
@@ -64,9 +67,10 @@
         </thead>
         <tbody>
           <tr
-            v-for="item in payments"
-            :key="item.date"
+            v-for="(item, index) in payments"
+            :key="index"
           >
+            <td>{{ index }}</td>
             <td>{{ item.date }}</td>
             <td>{{ item.monthlyPayment }}</td>
             <td>{{ item.monthlyPrincipal }}</td>
@@ -83,7 +87,7 @@
   import CalculatorService from '../common/calculator.service'
 
   export default {
-    name: 'credits-view',
+    name: 'refinance-view',
     data () {
       return {
         valid: false,
@@ -96,7 +100,7 @@
     },
     methods: {
       submit () {
-        CalculatorService.calculate({
+        CalculatorService.credit({
             amount: this.amount,
             period: this.period,
             interest: this.interest
@@ -104,6 +108,6 @@
           this.payments = response.data.message.montlyCreditData;
         });
       }
-    },
+    }
   }
 </script>
