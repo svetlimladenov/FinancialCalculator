@@ -81,5 +81,15 @@ namespace Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("CalculateLease")]
+        public async Task<IActionResult> CalculateLease(CalculateLeaseModel model)
+        {
+            var request = clientFactory.CreateRequest<CalculateLeaseRequested>(new { model.InitialPaymentPercentage, model.Period, model.Amount, model.Interest });
+
+            var response = await request.GetResponse<CalculateLeaseResponse>();
+
+            return Ok(response);
+        }
     }
 }
