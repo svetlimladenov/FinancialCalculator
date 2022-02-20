@@ -38,6 +38,7 @@ namespace Api
             {
                 cfg.UsingRabbitMq(MassTransitBusFactory.ConfigureBus);
                 cfg.AddRequestClient<UtilizeCreditRequested>();
+                cfg.AddRequestClient<CalculateCreditRequested>();
             });
 
             services.AddMassTransitHostedService();

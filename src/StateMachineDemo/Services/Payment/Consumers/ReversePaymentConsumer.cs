@@ -19,7 +19,7 @@ namespace Payment.Consumers
 
         public async Task Consume(ConsumeContext<ReversePaymentRequested> context)
         {
-            this.logger.LogInformation("Reversing payment with id {0}", context.Message.PaymentId);    
+            this.logger.LogInformation("Reversing payment with id {0}", context.Message.PaymentId);
         }
     }
 }

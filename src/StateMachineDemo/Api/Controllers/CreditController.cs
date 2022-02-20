@@ -18,19 +18,19 @@ namespace Api.Controllers
     {
         private readonly ILogger<CreditController> _logger;
         private readonly IClientFactory clientFactory;
-        private readonly IRequestClient<UtilizeCreditRequested> requestClient;
+        private readonly IRequestClient<UtilizeCreditRequested> utilizeRequstClient;
         private readonly IMapper mapper;
 
         public CreditController(ILogger<CreditController> logger, IClientFactory clientFactory, IRequestClient<UtilizeCreditRequested> requestClient, IMapper mapper)
         {
             _logger = logger;
             this.clientFactory = clientFactory;
-            this.requestClient = requestClient;
+            this.utilizeRequstClient = requestClient;
             this.mapper = mapper;
         }
 
         [HttpPost("UtilizeCredit")]
-        public async Task<IActionResult> UtilizeCredit([FromBody]UtilizeCreditModel credit)
+        public async Task<IActionResult> UtilizeCredit([FromBody] UtilizeCreditModel credit)
         {
             var createCredit = mapper.Map<CreateCreditDTO>(credit.CreateCredit);
             var bonusPoints = mapper.Map<BonusPointsDTO>(credit.BonusPoints);
@@ -38,13 +38,13 @@ namespace Api.Controllers
             var refinanceCredit = mapper.Map<RefinanceCreditDTO>(credit.RefinanceCredit);
             refinanceCredit.ParentCreditId = createCredit.CreditId;
 
-            var requestMessage = new 
+            var requestMessage = new
             {
                 CreateCredit = createCredit,
                 BonusPoints = bonusPoints,
                 RefinanceCredit = refinanceCredit
             };
-           
+
             using (var request = clientFactory.CreateRequestClient<UtilizeCreditRequested>().Create(requestMessage))
             {
                 var (statusResponse, errorResponse) = await request.GetResponses<UtilizeCreditCompleted, UtilizeCreditFaulted>();
@@ -62,44 +62,24 @@ namespace Api.Controllers
             }
         }
 
-
-        [HttpPost("UtilizeCredit2")]
-        public async Task<IActionResult> UtilizeCredit2([FromBody]UtilizeCreditModel credit)
+        [HttpPost("CalculateCredit")]
+        public async Task<IActionResult> CalculateCredit(CalculateCreditModel model)
         {
-            try
-            {
-                var createCredit = mapper.Map<CreateCreditDTO>(credit.CreateCredit);
-                var bonusPoints = mapper.Map<BonusPointsDTO>(credit.BonusPoints);
-                bonusPoints.CreditId = createCredit.CreditId;
-                var refinanceCredit = mapper.Map<RefinanceCreditDTO>(credit.RefinanceCredit);
-                refinanceCredit.ParentCreditId = createCredit.CreditId;
+            var request = clientFactory.CreateRequest<CalculateCreditRequested>(new { model.CreditSum, model.Interest, model.Months });
 
-                var response = await requestClient.GetResponse<UtilizeCreditCompleted, UtilizeCreditFaulted>(new
-                {
-                    CreateCredit = createCredit,
-                    BonusPoints = bonusPoints,
-                    RefinanceCredit = refinanceCredit
-                });
+            var response = await request.GetResponse<CalculateCreditResponse>();
 
-                return response switch
-                {
-                    (_, UtilizeCreditCompleted completed) => Ok(new
-                    {
-                       completed.CreditId
-                    }),
-                    (_, UtilizeCreditFaulted faulted) => BadRequest(new
-                    {
-                       faulted.CreditId
-                    }),
-                    _ => BadRequest()
-                };
-            }
-            catch (RequestTimeoutException)
-            {
-                return Accepted(new
-                {
-                });
-            }
+            return Ok(response);
+        }
+
+        [HttpPost("CalculateRefinanceCredit")]
+        public async Task<IActionResult> CalculateRefinanceCredit(CalculateRefinanceModel model)
+        {
+            var request = clientFactory.CreateRequest<CalculateRefinanceRequested>(new { model.CreditSum, model.Interest, model.Months, model.PaymentsMade });
+
+            var response = await request.GetResponse<RefinanceCreditResponse>();
+
+            return Ok(response);
         }
     }
 }
