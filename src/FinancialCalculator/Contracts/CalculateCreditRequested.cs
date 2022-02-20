@@ -2,9 +2,9 @@ namespace Contracts
 {
     public class CalculateCreditRequested
     {
-        public decimal CreditSum { get; set; }
+        public decimal Amount { get; set; }
 
-        public int Months { get; set; }
+        public int Period { get; set; }
 
         public decimal Interest { get; set; }
     }
