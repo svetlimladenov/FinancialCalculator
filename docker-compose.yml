@@ -1,5 +1,15 @@
 version: "3"
 services:
+  api:
+    container_name: api
+    build: 
+      dockerfile: Api/Dockerfile
+      context: src/FinancialCalculator
+    ports:
+      - "5000:5000"
+    restart: on-failure:5
+    depends_on:
+      - rabbitmq
   rabbitmq:
     container_name: rabbit
     hostname: rabbit

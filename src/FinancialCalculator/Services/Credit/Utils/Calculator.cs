@@ -10,7 +10,7 @@ namespace Credit.Utils
             => interest / 100 / 12;
 
         public decimal CalculateLeaseInitialPayment(decimal amount, double percentage)
-         => amount * (decimal)percentage / 100;
+            => amount * (decimal)percentage / 100;
 
 
         public decimal CalculateMontlyInstalment(decimal amount, decimal interestRate, int period)
