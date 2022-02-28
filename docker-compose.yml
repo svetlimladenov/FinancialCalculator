@@ -6,7 +6,16 @@ services:
       dockerfile: Api/Dockerfile
       context: src/FinancialCalculator
     ports:
-      - "5000:5000"
+      - "5000:80"
+    restart: on-failure:5
+    depends_on:
+      - rabbitmq
+    
+  credit:
+    container_name: credit
+    build: 
+      dockerfile: Services/Credit/Dockerfile
+      context: src/FinancialCalculator
     restart: on-failure:5
     depends_on:
       - rabbitmq
