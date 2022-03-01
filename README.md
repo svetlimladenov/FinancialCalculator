@@ -11,8 +11,12 @@ The calculator consists of few small services
 
 ## Setup
 
-For easier setup, we can run the RabbitMQ server in a docker container by executing
+For easier setup, we run everything in containers so you can just run:
 
 ```bash
 docker-compose up
 ```
+
+Visit http://localhost:8080/credit - to access the Vue App, and the Credit Calculator
+
+Visit http://localhost:5000/swagger/index.html - to access the API Swagget Documentation
