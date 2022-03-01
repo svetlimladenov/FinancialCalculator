@@ -29,3 +29,10 @@ services:
       - "15672:15672"
     environment:
       - RABBITMQ_DEFAULT_VHOST=test
+  ui:
+    container_name: ui
+    build:
+      dockerfile: Dockerfile
+      context: ui/financial-calculator
+    ports:
+      - "8080:80"
